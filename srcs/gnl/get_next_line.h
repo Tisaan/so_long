@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 15:50:52 by marvin            #+#    #+#             */
-/*   Updated: 2026/01/13 19:52:25 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/16 16:11:14 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,15 @@
 #  define BUFFER_SIZE 100
 # endif
 
-char	*rm_line(char *ret);
+char	*get_next_line(int fd);
 
-char	*read_file(int fd, char *line, char *buff);
+size_t	gnl_ft_strlen(char *src);
 
-char	*get_next_line(int fd, char c);
+char	*gnl_ft_strdup(char *src);
 
-size_t	ft_strlen(char *src);
+char	*gnl_ft_strchr(char *src, char lf);
 
-char	*ft_strdup(char *src);
+char	*gnl_ft_strjoin(char *po, char *pt);
 
-char	*ft_strchr(char *src, char lf);
-
-char	*ft_strjoin(char *po, char *pt);
-
-char	*ft_substr(char *src, unsigned int start, size_t len);
+char	*gnl_ft_substr(char *src, unsigned int start, size_t len);
 #endif

@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-char	*read_file(int fd, char *line, char *buff, char c)
+char	*read_file(int fd, char *line, char *buff)
 {
 	int		nb_read;
 	char	*temp;
@@ -30,11 +30,11 @@ char	*read_file(int fd, char *line, char *buff, char c)
 			break ;
 		buff[nb_read] = '\0';
 		if (!line)
-			line = ft_strdup("");
+			line = gnl_ft_strdup("");
 		temp = line;
-		line = ft_strjoin(temp, buff);
+		line = gnl_ft_strjoin(temp, buff);
 		free(temp);
-		if (ft_strchr(buff, c))
+		if (gnl_ft_strchr(buff, '\n'))
 			break ;
 	}
 	return (line);
@@ -50,7 +50,7 @@ char	*rm_line(char *ret)
 		i++;
 	if (ret[i] == '\0')
 		return (NULL);
-	line = ft_substr(ret, i + 1, ft_strlen(ret) - i);
+	line = gnl_ft_substr(ret, i + 1, gnl_ft_strlen(ret) - i);
 	if (!*line)
 	{
 		free(line);
@@ -60,7 +60,7 @@ char	*rm_line(char *ret)
 	return (line);
 }
 
-char	*get_next_line(int fd, char c)
+char	*get_next_line(int fd)
 {
 	static char	*line;
 	char		*ret;
@@ -69,7 +69,7 @@ char	*get_next_line(int fd, char c)
 	buff = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buff)
 		return (NULL);
-	ret = read_file(fd, line, buff, c);
+	ret = read_file(fd, line, buff);
 	free(buff);
 	if (!ret)
 		return (NULL);

@@ -6,7 +6,7 @@
 #    By: tseche <tseche@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/13 23:39:11 by tseche            #+#    #+#              #
-#    Updated: 2026/01/16 16:23:25 by tseche           ###   ########.fr        #
+#    Updated: 2026/01/18 18:30:06 by tseche           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,24 +22,32 @@ NC     := \033[0m # No Color
 NAME = so_long
 CFLAGS = -Wall -Werror -Wextra -g 
 CC	= cc
-SRCS =  ./srcs/so_long.c \
-		./srcs/main.c \
+SRCS =	./srcs/main.c \
 		./srcs/parsing/check_map.c \
 		./srcs/utils/call_error.c \
+		./srcs/utils/full_cleanup.c \
+		./srcs/utils/key_hook.c \
 		./srcs/utils/parsing.c \
+		./srcs/utils/init.c \
 		./srcs/utils/str_end_with.c \
 		
 INCLUDES = ./includes
 
+#gere si MLX est pas present
+MLXNAME = libmlx.a
+MLXDIR = ./mlx_linux
+MLX = $(MLXDIR)/$(MLXNAME)
+MLXMAKE = $(MAKE) --no-print-directory -C $(MLXDIR) -j
+
 GNLNAME = gnl.a
 GNLDIR = ./srcs/gnl
-GNL = $(GNLNAME)/$(GNLDIR)
-GNLMAKE = $(MAKE) --no-print-directory -C $(GNLDIR)
+GNL = $(GNLDIR)/$(GNLNAME)
+GNLMAKE = $(MAKE) --no-print-directory -C $(GNLDIR) -j
 
 LIBNAME = libft.a
 LIBDIR = ./srcs/lib_ft
 LIB = $(LIBDIR)/$(LIBNAME)
-LIBMAKE =  $(MAKE) --no-print-directory -C $(LIBDIR)
+LIBMAKE =  $(MAKE) --no-print-directory -C $(LIBDIR) -j
 
 OBJS = $(SRCS:%.c=%.o)
 
@@ -52,11 +60,15 @@ libs:
 	@echo "$(BLUE)📦 Building library in $(GNLDIR)...$(NC)"
 	@$(GNLMAKE)
 	@echo "$(BLUE)📦 GNL created $(NC)"
+	@test -d "$(MLXDIR)" || git clone https://github.com/42paris/minilibx-linux.git mlx_linux --depth=1
+	@echo "$(BLUE)📦 Building library in $(MLXDIR)...$(NC)"
+	@$(MLXMAKE)
+	@echo "$(BLUE)📦MLX created $(NC)"
 	
 
 $(NAME): $(OBJS)
 	@echo "$(BLUE)🔗 Creating Executable $@...$(NC)"
-	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBDIR) -l:$(LIBNAME) -L$(GNLDIR) -l:$(GNLNAME) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -L$(MLXDIR) -l:$(MLXNAME) -lX11 -lm -lXext -L$(LIBDIR) -l:$(LIBNAME) -L$(GNLDIR) -l:$(GNLNAME) -o $(NAME)
 	@echo "$(GREEN)✅ Created $@$(NC)"
 	
 %.o : %.c

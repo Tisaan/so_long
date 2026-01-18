@@ -1,40 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   key_hook.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/15 19:26:21 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/18 19:06:29 by tseche           ###   ########.fr       */
+/*   Created: 2026/01/18 16:51:34 by tseche            #+#    #+#             */
+/*   Updated: 2026/01/18 19:53:15 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../../includes/so_long.h"
 
-
-
-
-
-
-int	main(int ac, char **av)
+int	key_hook(int keycode, t_win_inst *inst)
 {
-	t_win_inst	*inst;
-
-	if (ac != 2)
-	{
-		write(2, "./so_long <PATH_TO_MAP>", 24);
-		return (1);
-	}
-	inst = malloc(sizeof(t_win_inst));
-	if (!inst)
-		call_err(ERROR_MALLOC);
-	inst->map = get_map_valid(av[1]);
-	init_mlx(inst);
-	inst->img.height = HEIGHT;
-	inst->img.width = WIDTH;
-	draw(inst);
-	set_hook(inst);
-	cleanup(inst);
+	if (keycode == )
 	return (0);
+};
+
+void	set_hook(t_win_inst *inst)
+{
+	mlx_hook(inst->win, 17, 0, close_window, inst);
+	mlx_key_hook(inst->win, key_hook, inst);
+	mlx_mouse_hook(inst->win, mouse_hook, inst);
 }

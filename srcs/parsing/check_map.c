@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:04:53 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/16 20:23:29 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/18 18:03:05 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,9 @@ t_map_info	get_map_valid(char *name)
 		call_err(ERROR_MALLOC);
 	}
 	err = is_valid(&map);
+	free(map.obj);
 	if (err != NO_ERROR)
 	{
-		free(map.obj);
 		ft_freeptr((void **)map.map);
 		call_err(err);
 	}

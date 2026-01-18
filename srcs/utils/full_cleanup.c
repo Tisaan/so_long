@@ -1,40 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   full_cleanup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/15 19:26:21 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/18 19:06:29 by tseche           ###   ########.fr       */
+/*   Created: 2026/01/18 16:11:32 by tseche            #+#    #+#             */
+/*   Updated: 2026/01/18 18:14:31 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../../includes/so_long.h"
 
-
-
-
-
-
-int	main(int ac, char **av)
+void	cleanup(t_win_inst *inst)
 {
-	t_win_inst	*inst;
-
-	if (ac != 2)
-	{
-		write(2, "./so_long <PATH_TO_MAP>", 24);
-		return (1);
-	}
-	inst = malloc(sizeof(t_win_inst));
-	if (!inst)
-		call_err(ERROR_MALLOC);
-	inst->map = get_map_valid(av[1]);
-	init_mlx(inst);
-	inst->img.height = HEIGHT;
-	inst->img.width = WIDTH;
-	draw(inst);
-	set_hook(inst);
-	cleanup(inst);
-	return (0);
+	
+	ft_freeptr((void **)inst->map.map);
+	free(inst->img.img);
+	free(inst->win);
+	free(inst->mlx_instance);
+	free(inst);
 }

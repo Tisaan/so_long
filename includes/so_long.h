@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:05:03 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/16 19:41:54 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/18 19:06:51 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,13 @@
 
 # include "../srcs/gnl/get_next_line.h"
 # include "../srcs/lib_ft/libft.h"
+# include "../mlx_linux/mlx.h"
 # include <fcntl.h>
 # include <stdbool.h>
 # include <errno.h>
+
+# define WIDTH 1920
+# define HEIGHT 1080
 
 bool	str_end_with(char *s, char *pattern);
 
@@ -76,20 +80,52 @@ typedef struct s_pos
 	size_t	y;
 }				t_pos;
 
-void	call_err(t_error_map err);
+typedef struct s_img
+{
+	char	*addr;
+	void	*img;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		offset;
+	int		height;
+	int		width;	
+}				t_img;
 
-bool	is_rectangle(t_map_info *map);
+typedef struct s_win_inst
+{
+	void		*mlx_instance;
+	void		*win;
+	t_img		img;
+	t_map_info	map;
+	t_pos		p_pos;
+}				t_win_inst;
 
-bool	properly_walled(t_map_info *map);
+//          [error reporting]
+void		call_err(t_error_map err);
+
+//          [parsing]
+bool		is_rectangle(t_map_info *map);
+
+bool		properly_walled(t_map_info *map);
 //est mal indent mais qu'importe les tab is est mal indente
 t_error_map	check_obj(t_map_info *map);
 
-char	**cp_map(t_map_info *map);
+char		**cp_map(t_map_info *map);
 
-void	floodfill(t_map_info *map, char **aux, int j, int i);
+void		floodfill(t_map_info *map, char **aux, int j, int i);
 
 t_error_map	rep_error(size_t coll, size_t finish, size_t start);
 
 t_map_info	get_map_valid(char *name);
+
+void		cleanup(t_win_inst *inst);
+
+//           [mlx]
+int			key_hook(int keycode, t_win_inst *inst);
+void		init_mlx(t_win_inst *inst);
+int			close_window(t_win_inst *inst);
+
+void		set_hook(t_win_inst *inst);
 
 #endif

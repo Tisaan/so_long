@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:47:39 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/16 20:21:50 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/18 15:34:16 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	**cp_map(t_map_info *map)
 	char	**cmap;
 	size_t	i;
 
-	cmap = malloc(sizeof(char *) * map->size);
+	cmap = malloc(sizeof(char *) * (map->size + 1));
 	if (!cmap)
 		return (NULL);
 	i = 0;
@@ -104,5 +104,6 @@ char	**cp_map(t_map_info *map)
 		}
 		i++;
 	}
+	cmap[i] = NULL;
 	return (cmap);
 }

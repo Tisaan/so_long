@@ -6,16 +6,11 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:26:21 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/18 19:06:29 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/19 15:46:12 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
-
-
-
-
-
 
 int	main(int ac, char **av)
 {
@@ -31,10 +26,11 @@ int	main(int ac, char **av)
 		call_err(ERROR_MALLOC);
 	inst->map = get_map_valid(av[1]);
 	init_mlx(inst);
-	inst->img.height = HEIGHT;
-	inst->img.width = WIDTH;
-	draw(inst);
+	init_sprite(inst);
+	inst->img.height = inst->map.size * 32;
+	inst->img.width = inst->map.len * 32;
 	set_hook(inst);
+	mlx_loop(inst->mlx_instance);
 	cleanup(inst);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:05:03 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/18 19:06:51 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/19 16:58:32 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@
 # include <stdbool.h>
 # include <errno.h>
 
-# define WIDTH 1920
-# define HEIGHT 1080
-
-bool	str_end_with(char *s, char *pattern);
+# define WALL_XPM "../assets/wall.xpm"
+# define EMPTY_XPM "../assets/empty.xpm"
+# define COLL_XPM "../assets/collectible.xpm"
+# define EXIT_XPM "../assets/exit.xpm"
+# define PLAYER_XPM "../assets/player.xpm"
 
 typedef enum e_error_map
 {
@@ -41,13 +42,14 @@ typedef enum e_error_map
 	NOT_REACH_FINISH,
 	ERROR_SIZE,
 	ERROR_OPEN,
+	ERROR_OPEN_XPM,
 	ERROR_MALLOC,
 	ERROR_MAX,
 }		t_error_map;
 
 static const char	*g_errors[ERROR_MAX] = {
 [NO_ERROR] = ("WTF an error has been"
-	"thrown, but no error was detected\n"),
+		"thrown, but no error was detected\n"),
 [INC_EXT] = "the map provided is not a .ber file\n",
 [INC_WALL] = "The wall hasn't been properly walled\n",
 [INC_CHAR] = "An unrecognize character has been found\n",
@@ -61,8 +63,17 @@ static const char	*g_errors[ERROR_MAX] = {
 [NOT_REACH_FINISH] = "The Map contains a not reachable exit\n",
 [ERROR_SIZE] = "The map is limited to 100 * 100 du to stack limitation\n",
 [ERROR_OPEN] = "A file couldn't be opened\n",
+[ERROR_OPEN_XPM] = "A XPM file couldn't be opened\n",
 [ERROR_MALLOC] = "Erreur malloc\n",
 };
+
+typedef enum e_move
+{
+	UP = 1,
+	DOWN = -1,
+	RIGHT = 1,
+	LEFT = -1	
+}			t_move;
 
 typedef struct s_map_info
 {
@@ -80,16 +91,33 @@ typedef struct s_pos
 	size_t	y;
 }				t_pos;
 
+typedef struct s_sprite
+{
+	void	*content;
+	int		height;
+	int		width;
+}				t_sprite;
+
+
+//sprite :
+// [0] wall
+// [1] empty
+// [2] coll
+// [3] player
+// [4] exit
 typedef struct s_img
 {
-	char	*addr;
-	void	*img;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-	int		offset;
-	int		height;
-	int		width;	
+	char			*addr;
+	void			*img;
+	int				bits_per_pixel;
+	int				line_length;
+	int				endian;
+	int				offset;
+	int				height;
+	int				width;
+	t_pos			player;
+	void			*tile;
+	t_sprite		*sprite;
 }				t_img;
 
 typedef struct s_win_inst
@@ -101,31 +129,41 @@ typedef struct s_win_inst
 	t_pos		p_pos;
 }				t_win_inst;
 
+
+t_error_map		check_obj(t_map_info *map);
+
+bool			str_end_with(char *s, char *pattern);
+
 //          [error reporting]
-void		call_err(t_error_map err);
+void			call_err(t_error_map err);
 
 //          [parsing]
-bool		is_rectangle(t_map_info *map);
+bool			is_rectangle(t_map_info *map);
 
-bool		properly_walled(t_map_info *map);
+bool			properly_walled(t_map_info *map);
 //est mal indent mais qu'importe les tab is est mal indente
-t_error_map	check_obj(t_map_info *map);
 
-char		**cp_map(t_map_info *map);
+char			**cp_map(t_map_info *map);
 
-void		floodfill(t_map_info *map, char **aux, int j, int i);
+void			floodfill(t_map_info *map, char **aux, int j, int i);
 
-t_error_map	rep_error(size_t coll, size_t finish, size_t start);
+t_error_map		rep_error(size_t coll, size_t finish, size_t start);
 
-t_map_info	get_map_valid(char *name);
+t_map_info		get_map_valid(char *name);
 
-void		cleanup(t_win_inst *inst);
+void			cleanup(t_win_inst *inst);
 
 //           [mlx]
-int			key_hook(int keycode, t_win_inst *inst);
-void		init_mlx(t_win_inst *inst);
-int			close_window(t_win_inst *inst);
+int				key_hook(int keycode, t_win_inst *inst);
+void			init_mlx(t_win_inst *inst);
+int				close_window(t_win_inst *inst);
 
-void		set_hook(t_win_inst *inst);
+void			set_hook(t_win_inst *inst);
+
+//          [Graphic]
+void			free_sprite(t_sprite *sprite);
+void			draw(t_win_inst *inst, t_move move);
+int				close_window(t_win_inst *inst);
+void			init_sprite(t_win_inst *inst);
 
 #endif

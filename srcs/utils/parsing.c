@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:47:39 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/18 15:34:16 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/19 14:53:28 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ bool	properly_walled(t_map_info *map)
 	{
 		if ((!i || !map->map[i + 1]) && is_diff_than(map->map[i], "1"))
 			return (false);
-		else if ((i && map->map[i + 1]) && (map->map[i][0] != '1' || map->map[i][map->len - 1] != '1'))
+		else if ((i && map->map[i + 1])
+			&& (map->map[i][0] != '1' || map->map[i][map->len - 1] != '1'))
 			return (false);
 		i++;
 	}

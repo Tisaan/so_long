@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:05:03 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/21 11:25:33 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/21 14:10:46 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,8 @@ typedef struct s_win_inst
 	t_img		img;
 	t_map_info	map;
 	size_t		nb_move;
+	int			cam_x;
+	int			cam_y;
 }				t_win_inst;
 
 t_error_map		check_obj(t_map_info *map);

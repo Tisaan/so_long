@@ -6,7 +6,7 @@
 #    By: tseche <tseche@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/13 23:39:11 by tseche            #+#    #+#              #
-#    Updated: 2026/01/19 15:35:00 by tseche           ###   ########.fr        #
+#    Updated: 2026/01/21 14:36:18 by tseche           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,13 +77,15 @@ $(NAME): $(OBJS)
 %.o : %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 	
-clean:
+clean: libclean
 	@echo "$(RED)🧹 Cleaning...$(NC)"
 	@rm -rf $(OBJS)
 
 libclean:
 	@echo "$(RED)🧹 Cleaning... lib-ft$(NC)"
 	@make -C $(LIBDIR) fclean --no-print-directory
+	@echo "$(RED)🧹 Cleaning... GNL$(NC)"
+	@make -C $(GNLDIR) fclean --no-print-directory
 
 fclean: clean libclean
 	@echo "$(RED)🗑️ Removing Executable $(NAME)...$(NC)"

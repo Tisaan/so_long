@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:04:53 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/21 11:16:09 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/21 14:44:36 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ t_error_map	is_valid(t_map_info *map)
 void	get_map(int fd, char *s, t_map_info *map)
 {
 	int		i;
-	char	*tmp;
 
 	i = 0;
 	map->map = malloc(sizeof(char *) * (get_size(s) + 1));
@@ -73,9 +72,7 @@ void	get_map(int fd, char *s, t_map_info *map)
 	i -= 2;
 	if (!str_end_with(map->map[i], "\n"))
 	{
-		tmp = map->map[i];
-		map->map[i] = ft_strjoin(tmp, "\n");
-		free(tmp);
+		map->map[i] = ft_strjoin(map->map[i], "\n", 0);
 		if (!map->map[i])
 			call_err(ERROR_MALLOC);
 	}

@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:05:21 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/21 11:24:42 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/21 14:46:43 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	free_sprite(t_win_inst *inst, t_sprite *sprite)
 	while (i <= 4)
 	{
 		mlx_destroy_image(inst->mlx_instance, sprite[i].content);
+		free(sprite[i].content);
 		i++;
 	}
 	free(sprite);
@@ -29,7 +30,7 @@ void	init_sprite(t_win_inst *inst)
 {
 	t_sprite	*sprite;
 
-	sprite = malloc(sizeof(t_sprite) * 6);
+	sprite = malloc(sizeof(t_sprite) * 5);
 	sprite[0].content = mlx_xpm_file_to_image(inst->mlx_instance,
 			WALL_XPM, &sprite[0].width, &sprite[0].height);
 	sprite[1].content = mlx_xpm_file_to_image(inst->mlx_instance, EMPTY_XPM,
@@ -48,6 +49,5 @@ void	init_sprite(t_win_inst *inst)
 		cleanup(inst);
 		call_err(ERROR_OPEN_XPM);
 	}
-	sprite[5] = (t_sprite){.content = NULL, .height = 0, .width = 0};
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:51:34 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/19 14:54:31 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/20 19:32:17 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	key_hook(int keycode, t_win_inst *inst)
 {
-	static int	count = 1;
-
-	ft_printf("%d", count++);
 	if (keycode == 65307)
 		close_window(inst);
 	else if (keycode == 65361)

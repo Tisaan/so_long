@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:47:39 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/19 14:53:28 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/21 11:19:50 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@ void	floodfill(t_map_info *map, char **aux, int i, int j)
 	if (aux[i][j] == '1' || aux[i][j] == 'V')
 		return ;
 	if (ft_isoneof(aux[i][j], "CEP"))
+	{
+		if (aux[i][j] == 'C')
+			map->obj_rest++;
 		map->obj[(int)aux[i][j]]--;
+	}
 	aux[i][j] = 'V';
 	floodfill(map, aux, i + 1, j);
 	floodfill(map, aux, i - 1, j);
@@ -44,8 +48,8 @@ bool	is_rectangle(t_map_info *map)
 				map->obj[(int)map->map[i][j]]++;
 			if (map->map[i][j] == 'P')
 			{
-				map->strt_x = i;
-				map->strt_y = j;
+				map->player_x = i;
+				map->player_y = j;
 			}
 			j++;
 		}

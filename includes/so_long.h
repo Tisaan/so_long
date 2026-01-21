@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:05:03 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/19 16:58:32 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/21 11:25:33 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 # include <stdbool.h>
 # include <errno.h>
 
-# define WALL_XPM "../assets/wall.xpm"
-# define EMPTY_XPM "../assets/empty.xpm"
-# define COLL_XPM "../assets/collectible.xpm"
-# define EXIT_XPM "../assets/exit.xpm"
-# define PLAYER_XPM "../assets/player.xpm"
+# define WALL_XPM "./textures/wall.xpm"
+# define EMPTY_XPM "./textures/empty.xpm"
+# define COLL_XPM "./textures/collectible.xpm"
+# define EXIT_XPM "./textures/exit.xpm"
+# define PLAYER_XPM "./textures/player.xpm"
 
 typedef enum e_error_map
 {
@@ -70,9 +70,9 @@ static const char	*g_errors[ERROR_MAX] = {
 typedef enum e_move
 {
 	UP = 1,
-	DOWN = -1,
-	RIGHT = 1,
-	LEFT = -1	
+	DOWN,
+	RIGHT,
+	LEFT,
 }			t_move;
 
 typedef struct s_map_info
@@ -81,15 +81,11 @@ typedef struct s_map_info
 	size_t	size;
 	size_t	len;
 	size_t	*obj;
-	size_t	strt_x;
-	size_t	strt_y;
+	size_t	player_x;
+	size_t	player_y;
+	size_t	on_door;
+	int		obj_rest;
 }				t_map_info;
-
-typedef struct s_pos
-{
-	size_t	x;
-	size_t	y;
-}				t_pos;
 
 typedef struct s_sprite
 {
@@ -97,7 +93,6 @@ typedef struct s_sprite
 	int		height;
 	int		width;
 }				t_sprite;
-
 
 //sprite :
 // [0] wall
@@ -107,15 +102,12 @@ typedef struct s_sprite
 // [4] exit
 typedef struct s_img
 {
-	char			*addr;
-	void			*img;
 	int				bits_per_pixel;
 	int				line_length;
 	int				endian;
 	int				offset;
 	int				height;
 	int				width;
-	t_pos			player;
 	void			*tile;
 	t_sprite		*sprite;
 }				t_img;
@@ -126,9 +118,8 @@ typedef struct s_win_inst
 	void		*win;
 	t_img		img;
 	t_map_info	map;
-	t_pos		p_pos;
+	size_t		nb_move;
 }				t_win_inst;
-
 
 t_error_map		check_obj(t_map_info *map);
 
@@ -161,7 +152,7 @@ int				close_window(t_win_inst *inst);
 void			set_hook(t_win_inst *inst);
 
 //          [Graphic]
-void			free_sprite(t_sprite *sprite);
+void			free_sprite(t_win_inst *inst, t_sprite *sprite);
 void			draw(t_win_inst *inst, t_move move);
 int				close_window(t_win_inst *inst);
 void			init_sprite(t_win_inst *inst);

@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 18:41:41 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/19 14:57:18 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/20 16:50:55 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	close_window(t_win_inst *inst)
 {
-	if (inst->img.img)
-		mlx_destroy_image(inst->mlx_instance, inst->img.img);
 	if (inst->win)
 		mlx_destroy_window(inst->mlx_instance, inst->win);
 	if (inst->mlx_instance)

@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:04:53 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/19 14:53:10 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/21 11:16:09 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_error_map	is_valid(t_map_info *map)
 		call_err(err);
 	}
 	aux = cp_map(map);
-	floodfill(map, aux, map->strt_x, map->strt_y);
+	floodfill(map, aux, map->player_x, map->player_y);
 	ft_freeptr((void **)aux);
 	err = check_obj(map);
 	return (err);
@@ -74,7 +74,7 @@ void	get_map(int fd, char *s, t_map_info *map)
 	if (!str_end_with(map->map[i], "\n"))
 	{
 		tmp = map->map[i];
-		map->map[i] = ft_strjoin(map->map[i], "\n");
+		map->map[i] = ft_strjoin(tmp, "\n");
 		free(tmp);
 		if (!map->map[i])
 			call_err(ERROR_MALLOC);

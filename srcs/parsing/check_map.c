@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:04:53 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/21 14:44:36 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/22 16:06:47 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,21 @@ int	get_size(char *s)
 	return (i);
 }
 
-t_error_map	is_valid(t_map_info *map)
+t_error_map	is_valid(t_map_info *map, t_win_inst *inst)
 {
 	t_error_map	err;
 	char		**aux;
 
 	if (!is_rectangle(map))
 		return (INC_SHAPE);
-	if (!properly_walled(map))
+	if (!properly_walled(map, inst))
 		return (INC_WALL);
 	if (map->len > 100 || map->size > 100)
 		return (ERROR_SIZE);
 	err = rep_error(map->obj['C'], map->obj['E'], map->obj['P']);
 	if (err != NO_ERROR)
 	{
+		free(inst);
 		free(map->obj);
 		ft_freeptr((void **)map->map);
 		call_err(err);
@@ -75,12 +76,14 @@ void	get_map(int fd, char *s, t_map_info *map)
 		map->map[i] = ft_strjoin(map->map[i], "\n", 0);
 		if (!map->map[i])
 			call_err(ERROR_MALLOC);
+		i++;
 	}
+	map->map[i] = NULL;
 	close(fd);
-	map->size = i + 1;
+	map->size = i;
 }
 
-t_map_info	get_map_valid(char *name)
+t_map_info	get_map_valid(char *name, t_win_inst *inst)
 {
 	int			fd;
 	t_map_info	map;
@@ -95,17 +98,11 @@ t_map_info	get_map_valid(char *name)
 	get_map(fd, name, &map);
 	map.obj = ft_calloc(256, sizeof(size_t));
 	if (!map.obj)
-	{
-		ft_freeptr((void **)map.map);
-		call_err(ERROR_MALLOC);
-	}
-	err = is_valid(&map);
+		free_parsing(&map, inst, ERROR_MALLOC);
+	err = is_valid(&map, inst);
 	free(map.obj);
 	if (err != NO_ERROR)
-	{
-		ft_freeptr((void **)map.map);
-		call_err(err);
-	}
+		free_parsing(&map, inst, err);
 	return (map);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 17:06:31 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/21 14:26:24 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/22 16:12:26 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,4 @@ void	init_mlx(t_win_inst *inst)
 		call_err(ERROR_MALLOC);
 	}
 	inst->nb_move = 0;
-	inst->cam_x = inst->map.player_x - inst->img.width / 2;
-	inst->cam_y = inst->map.player_y - inst->img.height / 2;
 }

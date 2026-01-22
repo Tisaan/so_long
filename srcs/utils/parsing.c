@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:47:39 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/21 11:19:50 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/22 15:48:19 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,15 @@ t_error_map	rep_error(size_t coll, size_t finish, size_t start)
 	return (NO_ERROR);
 }
 
-bool	properly_walled(t_map_info *map)
+bool	properly_walled(t_map_info *map, t_win_inst *inst)
 {
 	int	i;
 
 	i = 0;
 	while (map->map[i])
 	{
+		if (is_diff_than(map->map[i], "01CEP"))
+			free_parsing(map, inst, INC_CHAR);
 		if ((!i || !map->map[i + 1]) && is_diff_than(map->map[i], "1"))
 			return (false);
 		else if ((i && map->map[i + 1])

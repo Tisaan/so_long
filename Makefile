@@ -6,7 +6,7 @@
 #    By: tseche <tseche@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/13 23:39:11 by tseche            #+#    #+#              #
-#    Updated: 2026/01/21 14:36:18 by tseche           ###   ########.fr        #
+#    Updated: 2026/01/22 15:47:34 by tseche           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,11 +23,11 @@ NAME = so_long
 CFLAGS = -Wall -Werror -Wextra -g 
 CC	= cc
 SRCS =	./srcs/main.c \
-		./srcs/graphic/close_window.c \
 		./srcs/graphic/draw.c \
 		./srcs/utils/init_sprite.c \
 		./srcs/parsing/check_map.c \
 		./srcs/utils/call_error.c \
+		./srcs/utils/free_parsing.c \
 		./srcs/utils/full_cleanup.c \
 		./srcs/utils/key_hook.c \
 		./srcs/utils/parsing.c \

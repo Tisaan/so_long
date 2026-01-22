@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   close_window.c                                     :+:      :+:    :+:   */
+/*   free_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/18 18:41:41 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/20 16:50:55 by tseche           ###   ########.fr       */
+/*   Created: 2026/01/21 16:20:57 by tseche            #+#    #+#             */
+/*   Updated: 2026/01/21 16:28:59 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/so_long.h"
 
-int	close_window(t_win_inst *inst)
+void	free_parsing(t_map_info *map, t_win_inst *inst, t_error_map err)
 {
-	if (inst->win)
-		mlx_destroy_window(inst->mlx_instance, inst->win);
-	if (inst->mlx_instance)
-	{
-		mlx_destroy_display(inst->mlx_instance);
-		free(inst->mlx_instance);
-	}
-	exit(0);
-	return (0);
+	free(inst);
+	ft_freeptr((void **)map->map);
+	call_err(err);
 }

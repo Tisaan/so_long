@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 13:58:14 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/21 14:31:25 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/22 16:12:14 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ void	draw(t_win_inst *inst, t_move move)
 		}
 		x++;
 	}
-	inst->cam_x = inst->map.player_x - inst->img.width / 2;
-	inst->cam_x = inst->map.player_y - inst->img.height / 2;
 	if (inst->map.on_door && inst->map.obj_rest == 0)
 	{
 		ft_printf("You Win\n");

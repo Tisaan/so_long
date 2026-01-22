@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:05:21 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/21 14:46:43 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/21 15:04:25 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,7 @@ void	free_sprite(t_win_inst *inst, t_sprite *sprite)
 
 	i = 0;
 	while (i <= 4)
-	{
-		mlx_destroy_image(inst->mlx_instance, sprite[i].content);
-		free(sprite[i].content);
-		i++;
-	}
+		mlx_destroy_image(inst->mlx_instance, sprite[i++].content);
 	free(sprite);
 }
 

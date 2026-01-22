@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:05:03 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/21 14:10:46 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/22 16:12:02 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef enum e_error_map
 	NOT_REACH_COLL,
 	NOT_REACH_FINISH,
 	ERROR_SIZE,
+	ERROR_WIN,
 	ERROR_OPEN,
 	ERROR_OPEN_XPM,
 	ERROR_MALLOC,
@@ -61,7 +62,8 @@ static const char	*g_errors[ERROR_MAX] = {
 [TOO_MUCH_FINISH] = "The map contain too much finish\n",
 [NOT_REACH_COLL] = "The Map contains a not reachable collectible\n",
 [NOT_REACH_FINISH] = "The Map contains a not reachable exit\n",
-[ERROR_SIZE] = "The map is limited to 100 * 100 du to stack limitation\n",
+[ERROR_SIZE] = "The map is limited to 100 * 100 duw to stack limitation\n",
+[ERROR_WIN] = "The map is limited due to screen size limitation\n",
 [ERROR_OPEN] = "A file couldn't be opened\n",
 [ERROR_OPEN_XPM] = "A XPM file couldn't be opened\n",
 [ERROR_MALLOC] = "Erreur malloc\n",
@@ -119,8 +121,6 @@ typedef struct s_win_inst
 	t_img		img;
 	t_map_info	map;
 	size_t		nb_move;
-	int			cam_x;
-	int			cam_y;
 }				t_win_inst;
 
 t_error_map		check_obj(t_map_info *map);
@@ -131,9 +131,10 @@ bool			str_end_with(char *s, char *pattern);
 void			call_err(t_error_map err);
 
 //          [parsing]
+void			free_parsing(t_map_info *map, t_win_inst *inst, t_error_map err);
 bool			is_rectangle(t_map_info *map);
 
-bool			properly_walled(t_map_info *map);
+bool			properly_walled(t_map_info *map, t_win_inst *inst);
 //est mal indent mais qu'importe les tab is est mal indente
 
 char			**cp_map(t_map_info *map);
@@ -142,14 +143,13 @@ void			floodfill(t_map_info *map, char **aux, int j, int i);
 
 t_error_map		rep_error(size_t coll, size_t finish, size_t start);
 
-t_map_info		get_map_valid(char *name);
+t_map_info		get_map_valid(char *name, t_win_inst *inst);
 
 void			cleanup(t_win_inst *inst);
 
 //           [mlx]
 int				key_hook(int keycode, t_win_inst *inst);
 void			init_mlx(t_win_inst *inst);
-int				close_window(t_win_inst *inst);
 
 void			set_hook(t_win_inst *inst);
 

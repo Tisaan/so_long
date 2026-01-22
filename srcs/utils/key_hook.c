@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:51:34 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/20 19:32:17 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/21 15:10:06 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 int	key_hook(int keycode, t_win_inst *inst)
 {
 	if (keycode == 65307)
-		close_window(inst);
+	{
+		cleanup(inst);
+		exit(0);
+	}
 	else if (keycode == 65361)
 		draw(inst, LEFT);
 	else if (keycode == 65362)
@@ -27,8 +30,15 @@ int	key_hook(int keycode, t_win_inst *inst)
 	return (0);
 }
 
+int	exit_(t_win_inst *inst)
+{
+	cleanup(inst);
+	exit(0);
+	return (1);
+}
+
 void	set_hook(t_win_inst *inst)
 {
-	mlx_hook(inst->win, 17, 0, close_window, inst);
+	mlx_hook(inst->win, 17, 0, exit_, inst);
 	mlx_key_hook(inst->win, key_hook, inst);
 }

@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:05:03 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/22 16:12:02 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/22 18:09:23 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef enum e_error_map
 	INC_WALL,
 	INC_CHAR,
 	INC_SHAPE,
+	INV_MAP,
 	NOT_ENO_STRT,
 	TOO_MUCH_STRT,
 	NOT_ENO_COLL,
@@ -52,9 +53,10 @@ static const char	*g_errors[ERROR_MAX] = {
 [NO_ERROR] = ("WTF an error has been"
 		"thrown, but no error was detected\n"),
 [INC_EXT] = "the map provided is not a .ber file\n",
-[INC_WALL] = "The wall hasn't been properly walled\n",
+[INC_WALL] = "The map hasn't been properly walled\n",
 [INC_CHAR] = "An unrecognize character has been found\n",
 [INC_SHAPE] = "The Map is not a rectangle\n",
+[INV_MAP] = "the map is empty\n",
 [NOT_ENO_STRT] = "The Map contains no starting point\n",
 [TOO_MUCH_STRT] = "The map cointains too much starting point\n",
 [NOT_ENO_COLL] = "The Map contains no collectible\n",
@@ -131,7 +133,8 @@ bool			str_end_with(char *s, char *pattern);
 void			call_err(t_error_map err);
 
 //          [parsing]
-void			free_parsing(t_map_info *map, t_win_inst *inst, t_error_map err);
+void			free_parsing(t_map_info *map,
+					t_win_inst *inst, t_error_map err);
 bool			is_rectangle(t_map_info *map);
 
 bool			properly_walled(t_map_info *map, t_win_inst *inst);

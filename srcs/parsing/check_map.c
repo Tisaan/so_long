@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:04:53 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/22 16:06:47 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/22 18:08:01 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,17 @@ t_error_map	is_valid(t_map_info *map, t_win_inst *inst)
 	return (err);
 }
 
-void	get_map(int fd, char *s, t_map_info *map)
+void	get_map(int fd, char *s, t_map_info *map, t_win_inst *inst)
 {
 	int		i;
 
 	i = 0;
-	map->map = malloc(sizeof(char *) * (get_size(s) + 1));
+	map->map = ft_calloc(sizeof(char *), (get_size(s) + 1));
 	if (!map)
 		call_err(ERROR_MALLOC);
 	map->map[0] = get_next_line(fd);
+	if (!map->map[0])
+		free_parsing(map, inst, INV_MAP);
 	while (map->map[i++])
 		map->map[i] = get_next_line(fd);
 	i -= 2;
@@ -76,8 +78,8 @@ void	get_map(int fd, char *s, t_map_info *map)
 		map->map[i] = ft_strjoin(map->map[i], "\n", 0);
 		if (!map->map[i])
 			call_err(ERROR_MALLOC);
-		i++;
 	}
+	i++;
 	map->map[i] = NULL;
 	close(fd);
 	map->size = i;
@@ -87,22 +89,22 @@ t_map_info	get_map_valid(char *name, t_win_inst *inst)
 {
 	int			fd;
 	t_map_info	map;
-	t_error_map	err;
+	t_error_map	err;	
 
+	ft_bzero(&map, sizeof(t_map_info));
 	if (!str_end_with(name, ".ber"))
-		call_err(INC_EXT);
+		free_parsing(&map, inst, INC_EXT);
 	fd = open(name, O_RDONLY);
 	if (fd == -1)
-		call_err(ERROR_OPEN);
-	ft_bzero(&map, sizeof(t_map_info));
-	get_map(fd, name, &map);
+		free_parsing(&map, inst, ERROR_OPEN);
+	get_map(fd, name, &map, inst);
 	map.obj = ft_calloc(256, sizeof(size_t));
 	if (!map.obj)
 		free_parsing(&map, inst, ERROR_MALLOC);
 	err = is_valid(&map, inst);
-	free(map.obj);
 	if (err != NO_ERROR)
 		free_parsing(&map, inst, err);
+	free(map.obj);
 	return (map);
 }
 

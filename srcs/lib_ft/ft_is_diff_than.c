@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 14:42:10 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/08 18:02:12 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/22 17:23:18 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	is_diff_than(char *s, char *p)
 {
 	if (!s || !*s)
 		return (1);
-	while (*s)
+	while (*s && *s != '\n')
 	{
 		if (!ft_strchr(p, *s++))
 			return (0);

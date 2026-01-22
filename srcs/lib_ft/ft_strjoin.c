@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 17:45:38 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/21 14:40:12 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/22 18:08:44 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ Allocates memory (using malloc(3)) and returns a
 new string, which is the result of concatenating
 ’s1’ and ’s2’.
 */
-char	*ft_strjoin(char *s1, char *s2, int	to_free)
+char	*ft_strjoin(char *s1, char *s2, int to_free)
 {
 	char	*ptr;
 

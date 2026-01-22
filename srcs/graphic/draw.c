@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 13:58:14 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/22 16:12:14 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/22 18:10:25 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 void	render(t_win_inst *inst, t_sprite sp, size_t x, size_t y)
 {
-	mlx_put_image_to_window(inst->mlx_instance, inst->win, sp.content, (y * sp.width), (x * sp.height));
+	mlx_put_image_to_window(inst->mlx_instance, inst->win,
+		sp.content, (y * sp.width), (x * sp.height));
 }
 
 void	render_map(t_win_inst *inst, size_t x, size_t y)

@@ -6,12 +6,11 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 13:58:14 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/22 18:10:25 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/22 19:46:28 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/so_long.h"
-#include <regex.h>
 
 void	render(t_win_inst *inst, t_sprite sp, size_t x, size_t y)
 {

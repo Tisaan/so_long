@@ -6,7 +6,7 @@
 /*   By: tseche <tseche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:04:53 by tseche            #+#    #+#             */
-/*   Updated: 2026/01/22 18:08:01 by tseche           ###   ########.fr       */
+/*   Updated: 2026/01/23 01:11:13 by tseche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ void	get_map(int fd, char *s, t_map_info *map, t_win_inst *inst)
 		call_err(ERROR_MALLOC);
 	map->map[0] = get_next_line(fd);
 	if (!map->map[0])
+	{
+		close(fd);
 		free_parsing(map, inst, INV_MAP);
+	}
 	while (map->map[i++])
 		map->map[i] = get_next_line(fd);
 	i -= 2;
